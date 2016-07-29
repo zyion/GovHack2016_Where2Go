@@ -1,0 +1,12 @@
+# Mac
+.DS_Store
+
+# Node Server
+npm-debug.log
+server/node_modules/
+server/www/js/vendor
+
+# App
+app/www/js/vendor
+app/plugins
+app/platforms
