@@ -24,20 +24,14 @@ var App = (function() {
     var layers = [];
 
     var loadDataLayer = function(name) {
-        
-        console.log(name);
-
-/*
         while (layers.length > 0) {
             layers.pop().setMap(null);
         }
-
+        var list = dal.getListOf(name);
         for (var i in list) {
             if (i > 5) break; // Google maps limit of 10 data layers
             layers.push(map.geoData(list[i]['url']));
         }
-*/
-
     };
 
     var loadMenu = function() {
