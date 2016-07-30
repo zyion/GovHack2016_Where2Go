@@ -35,9 +35,9 @@ var dal = (function() {
     list.push(new GeoData('Tap', './data/Tap.geojson', 'Facility', '#00008B'));
     // list.push(new GeoData('Building', './data/Building.geojson', '#9932CC'));
 
-    
+
     function listOf(catergory) {
-        var catList = list;
+        var catList = [];
 
         for (var i = 0; i < catList.length; i++){
             if (list[i].catergory == catergory)
