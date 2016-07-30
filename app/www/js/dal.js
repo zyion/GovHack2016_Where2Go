@@ -11,11 +11,11 @@ var dal = (function() {
 
     var catergories = [];
 
-    catergories.push('boatingAndFishing');
-    catergories.push('cycling');
-    catergories.push('facility');
-    catergories.push('parking');
-    catergories.push('parksAndRecreation');
+    catergories.push('Boating And Fishing');
+    catergories.push('Cycling');
+    catergories.push('Facility');
+    catergories.push('Parking');
+    catergories.push('Parks And Recreation');
     
 
     var list = [];
