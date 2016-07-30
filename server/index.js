@@ -17,19 +17,36 @@ hbs.registerPartials(__dirname + '/views/partials');
 // static files
 app.use(express.static(__dirname + '/www'));
 
-
+var count = -1;
 // socket init
 io.on('connection', function (socket) {
+	count++;
+	console.log(count);
+	socket.emit('event', "sending initial event");
 
-	socket.emit('event', "A local event");
+	io.emit('connections', count);
 
 	socket.on('disconnect', function () {
+		count--;
+		io.emit('dc', count);
 		console.log("client logged out");
 	});
 
 	socket.on('event', function (data) {
 		console.log(data);
 		io.emit('event', data);
+
+	});
+
+	socket.on('emergency', function (data) {
+		console.log(data);
+		io.emit('emergency', data);
+
+	});
+
+	socket.on('roadBlock', function (data) {
+		console.log(data);
+		io.emit('roadBlock', data);
 
 	});
 
