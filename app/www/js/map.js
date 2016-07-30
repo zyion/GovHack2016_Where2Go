@@ -5,19 +5,31 @@ var map = (function () {
     var mapwatch;
     var marker;
 
+    var follow = true;
+
     var onPositionSuccess = function(position) {
-        var lat = position.coords["latitude"];
-        var lng = position.coords["longitude"];
-        if (mapview) {
-            mapview.setCenter(new google.maps.LatLng(lat, lng));
-        }
-        if (marker) {
-            marker.setPosition(new google.maps.LatLng(lat, lng));
+        if (follow) {
+            var lat = position.coords["latitude"];
+            var lng = position.coords["longitude"];
+            if (mapview) {
+                mapview.setCenter(new google.maps.LatLng(lat, lng));
+            }
+            if (marker) {
+                marker.setPosition(new google.maps.LatLng(lat, lng));
+            }
         }
     };
 
     var onPositionError = function(error) {
         console.log('GPS Location error: ', error);
+    };
+
+    var geoData = function(url) {
+        //mapview.data.loadGeoJson(url);
+        var dataLayer = new google.maps.Data();
+        dataLayer.loadGeoJson(url);
+        dataLayer.setMap(mapview);
+        return dataLayer;
     };
 
     var init = function () {
@@ -36,13 +48,18 @@ var map = (function () {
                 position: {lat: lat, lng: lng}
             });
 
+            geoData('./data/Artificial_Reef.geojson');
+            geoData('./data/Parking_Area.geojson');
+
         }, onPositionError);
 
         mapwatch = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError);
+
     };
 
     return {
-        init: init
+        init: init,
+        geoData: geoData
     };
 
 })();
