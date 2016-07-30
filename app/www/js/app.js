@@ -21,6 +21,37 @@ var App = (function() {
         }
     };
 
+    var layers = [];
+
+    var loadDataLayer = function(name) {
+        
+        console.log(name);
+
+/*
+        while (layers.length > 0) {
+            layers.pop().setMap(null);
+        }
+
+        for (var i in list) {
+            if (i > 5) break; // Google maps limit of 10 data layers
+            layers.push(map.geoData(list[i]['url']));
+        }
+*/
+
+    };
+
+    var loadMenu = function() {
+        loadTemplate('./views/toggle_list.html', function(template) {
+            if (template) {
+                $('#toggle-list').html(populateTemplate(template, {data: dal.getCatergories}));
+            } else {
+                console.log('toggle_list.html not found!');
+            }
+        });
+        $(document).on('click', '.toggle-item', function (event) {
+            loadDataLayer(event.target.id);
+        });
+    };
 
     var displayPage = function(page) {
         $('#map-wrapper').removeClass('shown');
@@ -44,16 +75,15 @@ var App = (function() {
         $('#map-wrapper').addClass('shown');
     };
 
+
     var loaded = function() {
-        var list = dal.getList;
-        for (var i in list) {
-            map.geoData(i.url);
-        }
+
     };
 
     return {
         displayPage: displayPage,
         displayMap: displayMap,
+        loadMenu: loadMenu,
         loaded: loaded
     };
 })();
