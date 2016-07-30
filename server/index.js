@@ -29,7 +29,7 @@ io.on('connection', function (socket) {
 
 	socket.on('event', function (data) {
 		console.log(data);
-		socket.emit('event', data);
+		io.emit('event', data);
 
 	});
 
