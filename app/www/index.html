@@ -51,11 +51,24 @@
             </div>
         </div>
 
+        <div id="btn-toggle" class="dropdown">
+            <button id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="label label-default label-as-badge-inverse">
+                    <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                </span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dLabel">
+                <li><a id="events">Toilets</a></li>
+                <li><a id="events">Food</a></li>
+            </ul>
+        </div>
+
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/vendor/jquery/dist/jquery.min.js"></script>
         <script type="text/javascript" src="js/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/vendor/handlebars/handlebars.min.js"></script>
         <script src="http://64.137.223.40:1337/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="js/dal.js"></script>
         <script type="text/javascript" src="js/map.js"></script>
         <script type="text/javascript" src="js/socket.js"></script>
         <script type="text/javascript" src="js/index.js"></script>

@@ -36,7 +36,6 @@ var App = (function() {
                 console.log('Page not found: ' + page);
             }
         });
-
     };
 
     var displayMap = function() {
