@@ -39,7 +39,7 @@ var dal = (function() {
     function listOf(catergory) {
         var catList = [];
 
-        for (var i = 0; i < catList.length; i++){
+        for (var i = 0; i < list.length; i++){
             if (list[i].catergory == catergory)
                 catList.push(list[i]);
         }
