@@ -1,23 +1,75 @@
 
-$(function() {
-    console.log('jQuery Ready!');
 
+var App = (function() {
+
+    var templates = {};
+    var populateTemplate = function(template, data) {
+        return Handlebars.compile($(template).html())(data);
+    };
+    var loadTemplate = function(url, callback) {
+        if (url in templates) {
+            callback(templates[url]);
+        } else {
+            $.ajax({
+                method: 'GET',
+                url: url,
+                datatype: 'html'
+            }).done(function(html) {
+                templates[url] = html;
+                callback(html);
+            });
+        }
+    };
+
+
+
+    var displayPage = function(page) {
+        $('#map-wrapper').removeClass('shown');
+        $('#map-wrapper').addClass('hidden');
+        $('#page-wrapper').removeClass('hidden');
+        $('#page-wrapper').addClass('shown');
+
+        loadTemplate('./views/' + page + '.html', function(template) {
+            if (template) {
+                $('#page').html(populateTemplate(template, {}));
+            } else {
+                console.log('Page not found: ' + page);
+            }
+        });
+
+    };
+
+    var displayMap = function() {
+        $('#page-wrapper').removeClass('shown');
+        $('#page-wrapper').addClass('hidden');
+        $('#map-wrapper').removeClass('hidden');
+        $('#map-wrapper').addClass('shown');
+    };
+
+    return {
+        displayPage: displayPage,
+        displayMap: displayMap
+    };
+})();
+
+$(function() {
 
 }).on('deviceready', function() {
-    console.log('Cordova Ready!');
 
-    var socket = io.connect('http://64.137.223.40:1337');
+    server.connect();
 
-    socket.on('event', function(data) {
-        console.log(data);
+
+    $('#events').click(function() {
+        App.displayPage('events');
     });
-
-    socket.on('connect', function(data) {
-        console.log(data);
+    $('#accom').click(function() {
+        App.displayMap();
     });
-
-    socket.on('connect_error', function(data) {
-        console.log(data);
+    $('#emergency').click(function() {
+        App.displayPage('events');
+    });
+    $('#safety').click(function() {
+        App.displayMap();
     });
 
 });

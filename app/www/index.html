@@ -31,10 +31,10 @@
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="#">Events</a></li>
-                        <li><a href="#">Accomodation</a></li>
-                        <li><a href="#">Emergency</a></li>
-                        <li><a href="#">Safety</a></li>
+                        <li><a id="events">Events</a></li>
+                        <li><a id="accom">Accomodation</a></li>
+                        <li><a id="emergency">Emergency</a></li>
+                        <li><a id="safety">Safety</a></li>
                     </ul>
                 </div>
 
@@ -43,7 +43,12 @@
 
         <!-- Content -->
         <div id="content" class="container-fluid">
-            <div id="map"></div>
+            <div id="map-wrapper" class="wrapper">
+                <div id="map"></div>
+            </div>
+            <div id="page-wrapper" class="wrapper">
+                <div id="page"></div>
+            </div>
         </div>
 
         <script type="text/javascript" src="cordova.js"></script>
@@ -52,6 +57,7 @@
         <script type="text/javascript" src="js/vendor/handlebars/handlebars.min.js"></script>
         <script src="http://64.137.223.40:1337/socket.io/socket.io.js"></script>
         <script type="text/javascript" src="js/map.js"></script>
+        <script type="text/javascript" src="js/socket.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATlr8T7UkQhk0Y2oyiR416UZa7KU28F_Q&callback=map.init" async defer></script>
     </body>

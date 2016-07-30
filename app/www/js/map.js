@@ -6,12 +6,13 @@ var map = (function () {
     var marker;
 
     var onPositionSuccess = function(position) {
-        console.log(position);
+        var lat = position.coords["latitude"];
+        var lng = position.coords["longitude"];
         if (mapview) {
-            var lat = position.coords["latitude"];
-            var lng = position.coords["longitude"];
-            mapview.setCenter({lat: lat, lng : lng, alt: 0});
-            marker.setPosition({lat: lat, lng : lng});
+            mapview.setCenter(new google.maps.LatLng(lat, lng));
+        }
+        if (marker) {
+            marker.setPosition(new google.maps.LatLng(lat, lng));
         }
     };
 
@@ -20,25 +21,22 @@ var map = (function () {
     };
 
     var init = function () {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords["latitude"];
+            var lng = position.coords["longitude"];
 
-        var lat;
-        var lng;
-        
-        navigator.geolocation.getCurrentPosition(function() {
-            lat = position.coords["latitude"];
-            lng = position.coords["longitude"];
-        });
+            mapview = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: lat, lng: lng},
+                scrollwheel: false,
+                zoom: 16
+            });
 
-        mapview = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: lat, lng: lng},
-            scrollwheel: false,
-            zoom: 8
-        });
+            marker = new google.maps.Marker({
+                map: mapview,
+                position: {lat: lat, lng: lng}
+            });
 
-        marker = new google.maps.Marker({
-            map: mapview,
-            position: {lat: lat, lng: lng}
-        });
+        }, onPositionError);
 
         mapwatch = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError);
     };
