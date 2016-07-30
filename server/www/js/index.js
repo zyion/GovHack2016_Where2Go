@@ -1,8 +1,8 @@
 $(function () {
 
-	var connectionCount = -1;
 
-	var socket = io.connect('http://localhost:1337');
+	var socket = io.connect('http://64.137.223.40:1337');
+	//64.137.223.40
 
 	console.log("testing if zyion is correct");
 	//console.log($("#title").val());
