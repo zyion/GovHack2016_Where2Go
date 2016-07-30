@@ -1,5 +1,5 @@
 
-var map = (function () {
+var map = (function (App) {
 
     var mapview;
     var mapwatch;
@@ -48,13 +48,11 @@ var map = (function () {
                 position: {lat: lat, lng: lng}
             });
 
-            geoData('./data/Artificial_Reef.geojson');
-            geoData('./data/Parking_Area.geojson');
+            App.loaded();
 
         }, onPositionError);
 
         mapwatch = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError);
-
     };
 
     return {
@@ -62,4 +60,4 @@ var map = (function () {
         geoData: geoData
     };
 
-})();
+})(App);
