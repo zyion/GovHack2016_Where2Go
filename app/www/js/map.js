@@ -63,13 +63,6 @@ var map = (function (App) {
         mapwatch = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError);
     };
 
-    // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
-    // var beachMarker = new google.maps.Marker({
-    //     position: {lat: -33.890, lng: 151.274},
-    //     map: map,
-    //     icon: image
-    // });
-
 
     var addMarker = function(options) {
         var mapmarker = new google.maps.Marker(options);
