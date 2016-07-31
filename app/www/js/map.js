@@ -24,10 +24,18 @@ var map = (function (App) {
         console.log('GPS Location error: ', error);
     };
 
-    var geoData = function(url) {
+    var geoData = function(object) {
         //mapview.data.loadGeoJson(url);
+
         var dataLayer = new google.maps.Data();
-        dataLayer.loadGeoJson(url);
+        dataLayer.loadGeoJson(object.url);
+
+        dataLayer.setStyle({
+            icon: object.marker,
+            fillColor: 'green',
+            strokeColor: 'red'
+        });
+
         dataLayer.setMap(mapview);
         return dataLayer;
     };
