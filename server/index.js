@@ -22,7 +22,7 @@ var count = -1;
 io.on('connection', function (socket) {
 	count++;
 	console.log(count);
-	socket.emit('event', "sending initial event");
+	//socket.emit('event', "sending initial event");
 
 	io.emit('connections', count);
 
