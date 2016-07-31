@@ -9,4 +9,3 @@ server/www/js/vendor
 # App
 app/www/js/vendor
 app/plugins
-app/platforms
