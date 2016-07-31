@@ -86,6 +86,24 @@ var App = (function() {
         // Transport
         $(document).on('click', '#transport', function (event) {
             clearMarkers();
+            while (layers.length > 0) {
+                layers.pop().setMap(null);
+            }
+
+            var trafficLayer = new google.maps.TrafficLayer();
+            trafficLayer.setMap(map.getView());
+
+            var transitLayer = new google.maps.TransitLayer();
+            transitLayer.setMap(map.getView());
+
+            var bikeLayer = new google.maps.BicyclingLayer();
+            bikeLayer.setMap(map.getView());
+
+            layers.push(bikeLayer);
+            layers.push(transitLayer);
+            layers.push(trafficLayer);
+            
+            /*
             loadCsv('./data/SEQ_GTFS/stops.txt', function(csv) {
                 parseCsv(csv, function (records) {
                     console.log(records);
@@ -103,6 +121,7 @@ var App = (function() {
 
                 });
             });
+            */
             
         });
 
@@ -120,6 +139,9 @@ var App = (function() {
         // Comm Games Venues
         $(document).on('click', '#commonwealthGames', function (event) {
             clearMarkers();
+            while (layers.length > 0) {
+                layers.pop().setMap(null);
+            }
             loadCsv('./data/gold-coast-2018-commonwealth-games-competition-venues.csv', function(csv) {
                 parseCsv(csv, function (records) {
                     for (var i in records) {
@@ -143,6 +165,9 @@ var App = (function() {
         // Beaches
         $(document).on('click', '#beaches', function (event) {
             clearMarkers();
+            while (layers.length > 0) {
+                layers.pop().setMap(null);
+            }
             $.ajax({
                 url: 'https://data.qld.gov.au/api/action/datastore_search',
                 datatype: 'jsonp'
