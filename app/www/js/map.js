@@ -48,12 +48,6 @@ var map = (function (App) {
                 position: {lat: lat, lng: lng}
             });
 
-            var dataLayer = new google.maps.KmlLayer({
-                url: 'https://gtfsrt.api.translink.com.au/Feed/SEQ',
-                suppressInfoWindows: true,
-                map: mapview
-            });
-
             App.loaded();
 
         }, onPositionError);
@@ -61,9 +55,16 @@ var map = (function (App) {
         mapwatch = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError);
     };
 
+    var addMarker = function(options) {
+        var mapmarker = new google.maps.Marker(options);
+        mapmarker.setMap(mapview);
+        return mapmarker;
+    }
+
     return {
         init: init,
-        geoData: geoData
+        geoData: geoData,
+        addMarker: addMarker
     };
 
 })(App);

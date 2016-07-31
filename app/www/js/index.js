@@ -4,7 +4,7 @@ $(function() {
 }).on('deviceready', function() {
 
     App.loadMenu();
-    //server.connect();
+    server.connect();
 
     $('#events').click(function() {
         App.displayPage('events');
