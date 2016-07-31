@@ -50,37 +50,6 @@ var App = (function() {
         callback(records);
     };
 
-    var parseFuckedCsv = function (csv, callback) {
-        var lines = csv.split('\n');
-        var headers = lines[0].split(',');
-        var records = [];
-        for (var i = 1; i < lines.length; i++) {
-            var record = {};
-            if (lines[i] !== "") {
-                var row = lines[i].split(',');
-                if (row.length == headers.length) {
-                    for (var j = 0; j < headers.length; j++) {
-                        record[headers[j].trim()] = row[j].trim();
-                    }
-                    records.push(record);
-                } else {
-                     for (var j = 0; j < headers.length; j++) {
-                        if (row[j].trim().startsWith('"')) {
-                            var value = row[j].trim();
-                            var index = 0;
-                            while (!row[j + index].trim().endsWith('"')) {
-                                value.concat(row[j + index].trim());
-                            }
-                        }
-
-                        record[headers[j].trim()] = row[j].trim();
-                    }
-                }
-            }
-        }
-        callback(records);
-    };
-
     var layers = [];
 
     var loadDataLayer = function(name) {
@@ -116,8 +85,8 @@ var App = (function() {
                         var record = records[i];
                         map.addMarker({
                             position: {
-                                lat: parseInt(record['stop_lat']),
-                                lng: parseInt(record['stop_lng'])
+                                lat: parseFloat(record['stop_lat']),
+                                lng: parseFloat(record['stop_lng'])
                             },
                             title: record['stop_name'],
                             label: 'Stop'
@@ -135,21 +104,16 @@ var App = (function() {
             loadCsv('./data/gold-coast-2018-commonwealth-games-competition-venues.csv', function(csv) {
                 parseCsv(csv, function (records) {
 
-                    console.log(records);
-
                     for (var i in records) {
                         var record = records[i];
-                        var options = {
+                        map.addMarker({
                             position: {
-                                lat: parseInt(record['Latitude']),
-                                lng: parseInt(record['Longitude'])
+                                lat: parseFloat(record['Latitude']),
+                                lng: parseFloat(record['Longitude'])
                             },
                             title: record['Venue'],
                             label: record['Sport']
-                        };
-                        console.log(record);
-                        console.log(options);
-                        map.addMarker(options);
+                        });
                     }
 
                 });
