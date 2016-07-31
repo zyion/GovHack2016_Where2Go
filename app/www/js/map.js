@@ -43,14 +43,17 @@ var map = (function (App) {
             mapview = new google.maps.Map(document.getElementById('map'), {
                 center: {lat: lat, lng: lng},
                 scrollwheel: false,
-                zoom: 16
+                zoom: 16,
+                disableDefaultUI: true
             });
 
             mapview.setOptions({styles: styles});
 
+            var image = './img/user-marker.png';
             marker = new google.maps.Marker({
                 map: mapview,
-                position: {lat: lat, lng: lng}
+                position: {lat: lat, lng: lng},
+                icon: image
             });
 
             App.loaded();
@@ -59,6 +62,14 @@ var map = (function (App) {
 
         mapwatch = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError);
     };
+
+    // var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+    // var beachMarker = new google.maps.Marker({
+    //     position: {lat: -33.890, lng: 151.274},
+    //     map: map,
+    //     icon: image
+    // });
+
 
     var addMarker = function(options) {
         var mapmarker = new google.maps.Marker(options);
