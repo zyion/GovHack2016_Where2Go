@@ -32,8 +32,8 @@ var map = (function (App) {
 
         dataLayer.setStyle({
             icon: object.marker,
-            fillColor: 'green',
-            strokeColor: 'red'
+            fillColor: '#8B008B',
+            strokeColor: '#8B008B'
         });
 
         dataLayer.setMap(mapview);
