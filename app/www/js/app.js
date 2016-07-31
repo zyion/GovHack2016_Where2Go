@@ -51,6 +51,13 @@ var App = (function() {
     };
 
     var layers = [];
+    var markers = [];
+
+    var clearMarkers = function () {
+        while (markers.length > 0) {
+            markers.pop().setMap(null);
+        }
+    };
 
     var loadDataLayer = function(name) {
         while (layers.length > 0) {
@@ -72,12 +79,13 @@ var App = (function() {
             }
         });
         $(document).on('click', '.toggle-item', function (event) {
+            clearMarkers();
             loadDataLayer(event.target.id);
         });
 
         // Transport
         $(document).on('click', '#transport', function (event) {
-            
+            clearMarkers();
             loadCsv('./data/SEQ_GTFS/stops.txt', function(csv) {
                 parseCsv(csv, function (records) {
                     console.log(records);
@@ -98,15 +106,26 @@ var App = (function() {
             
         });
 
+        var addMarkerInfo = function (mapview, marker, record) {
+            marker.addListener('click', function() {
+                loadTemplate('./views/comm_info.html', function(template) {
+                    var infowindow = new google.maps.InfoWindow({
+                        content: populateTemplate(template, record)
+                    });
+                    infowindow.open(mapview, marker);
+                });
+            });
+        };
+
         // Comm Games Venues
         $(document).on('click', '#commonwealthGames', function (event) {
-            
+            clearMarkers();
             loadCsv('./data/gold-coast-2018-commonwealth-games-competition-venues.csv', function(csv) {
                 parseCsv(csv, function (records) {
-
                     for (var i in records) {
                         var record = records[i];
-                        map.addMarker({
+                        console.log(record);
+                        var marker = map.addMarker({
                             position: {
                                 lat: parseFloat(record['Latitude']),
                                 lng: parseFloat(record['Longitude'])
@@ -114,16 +133,16 @@ var App = (function() {
                             title: record['Venue'],
                             label: record['Sport']
                         });
+                        addMarkerInfo(map.getView(), marker, record);
+                        markers.push(marker);
                     }
-
                 });
             });
-            
         });
 
         // Beaches
         $(document).on('click', '#beaches', function (event) {
-            
+            clearMarkers();
             $.ajax({
                 url: 'https://data.qld.gov.au/api/action/datastore_search',
                 datatype: 'jsonp'

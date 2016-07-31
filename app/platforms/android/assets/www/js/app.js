@@ -50,38 +50,14 @@ var App = (function() {
         callback(records);
     };
 
-    var parseFuckedCsv = function (csv, callback) {
-        var lines = csv.split('\n');
-        var headers = lines[0].split(',');
-        var records = [];
-        for (var i = 1; i < lines.length; i++) {
-            var record = {};
-            if (lines[i] !== "") {
-                var row = lines[i].split(',');
-                if (row.length == headers.length) {
-                    for (var j = 0; j < headers.length; j++) {
-                        record[headers[j].trim()] = row[j].trim();
-                    }
-                    records.push(record);
-                } else {
-                     for (var j = 0; j < headers.length; j++) {
-                        if (row[j].trim().startsWith('"')) {
-                            var value = row[j].trim();
-                            var index = 0;
-                            while (!row[j + index].trim().endsWith('"')) {
-                                value.concat(row[j + index].trim());
-                            }
-                        }
-
-                        record[headers[j].trim()] = row[j].trim();
-                    }
-                }
-            }
-        }
-        callback(records);
-    };
-
     var layers = [];
+    var markers = [];
+
+    var clearMarkers = function () {
+        while (markers.length > 0) {
+            markers.pop().setMap(null);
+        }
+    };
 
     var loadDataLayer = function(name) {
         while (layers.length > 0) {
@@ -103,12 +79,13 @@ var App = (function() {
             }
         });
         $(document).on('click', '.toggle-item', function (event) {
+            clearMarkers();
             loadDataLayer(event.target.id);
         });
 
         // Transport
         $(document).on('click', '#transport', function (event) {
-            
+            clearMarkers();
             loadCsv('./data/SEQ_GTFS/stops.txt', function(csv) {
                 parseCsv(csv, function (records) {
                     console.log(records);
@@ -116,8 +93,8 @@ var App = (function() {
                         var record = records[i];
                         map.addMarker({
                             position: {
-                                lat: parseInt(record['stop_lat']),
-                                lng: parseInt(record['stop_lng'])
+                                lat: parseFloat(record['stop_lat']),
+                                lng: parseFloat(record['stop_lng'])
                             },
                             title: record['stop_name'],
                             label: 'Stop'
@@ -129,37 +106,43 @@ var App = (function() {
             
         });
 
+        var addMarkerInfo = function (mapview, marker, record) {
+            marker.addListener('click', function() {
+                loadTemplate('./views/comm_info.html', function(template) {
+                    var infowindow = new google.maps.InfoWindow({
+                        content: populateTemplate(template, record)
+                    });
+                    infowindow.open(mapview, marker);
+                });
+            });
+        };
+
         // Comm Games Venues
         $(document).on('click', '#commonwealthGames', function (event) {
-            
+            clearMarkers();
             loadCsv('./data/gold-coast-2018-commonwealth-games-competition-venues.csv', function(csv) {
                 parseCsv(csv, function (records) {
-
-                    console.log(records);
-
                     for (var i in records) {
                         var record = records[i];
-                        var options = {
+                        console.log(record);
+                        var marker = map.addMarker({
                             position: {
-                                lat: parseInt(record['Latitude']),
-                                lng: parseInt(record['Longitude'])
+                                lat: parseFloat(record['Latitude']),
+                                lng: parseFloat(record['Longitude'])
                             },
                             title: record['Venue'],
                             label: record['Sport']
-                        };
-                        console.log(record);
-                        console.log(options);
-                        map.addMarker(options);
+                        });
+                        addMarkerInfo(map.getView(), marker, record);
+                        markers.push(marker);
                     }
-
                 });
             });
-            
         });
 
         // Beaches
         $(document).on('click', '#beaches', function (event) {
-            
+            clearMarkers();
             $.ajax({
                 url: 'https://data.qld.gov.au/api/action/datastore_search',
                 datatype: 'jsonp'

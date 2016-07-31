@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/MKUltra/Projects/W2G/GovHack2016_Where2Go/app/platforms/android/CordovaLib/src/main/jniLibs"/></dataSet><dataSet config="debug"><source path="/Users/MKUltra/Projects/W2G/GovHack2016_Where2Go/app/platforms/android/CordovaLib/src/debug/jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="C:\Users\Zyion\Documents\projects\GovHack2016\app\platforms\android\CordovaLib\src\main\jniLibs"/></dataSet><dataSet config="debug"><source path="C:\Users\Zyion\Documents\projects\GovHack2016\app\platforms\android\CordovaLib\src\debug\jniLibs"/></dataSet></merger>

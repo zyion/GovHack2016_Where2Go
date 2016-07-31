@@ -71,7 +71,6 @@ var map = (function (App) {
         mapwatch = navigator.geolocation.watchPosition(onPositionSuccess, onPositionError);
     };
 
-
     var addMarker = function(options) {
         var mapmarker = new google.maps.Marker(options);
         mapmarker.setMap(mapview);
@@ -81,7 +80,10 @@ var map = (function (App) {
     return {
         init: init,
         geoData: geoData,
-        addMarker: addMarker
+        addMarker: addMarker,
+        getView: function () {
+            return mapview;
+        }
     };
 
 })(App);
