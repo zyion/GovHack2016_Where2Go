@@ -41,7 +41,7 @@ $(function () {
 
 		socket.emit('emergency', data);
 
-		//console.log(data);
+		console.log(data);
 
 	});
 
@@ -58,7 +58,7 @@ $(function () {
 
 		socket.emit('roadBlock', data);
 
-		//console.log(data);
+		console.log(data);
 
 	});
 
